@@ -1,5 +1,3 @@
-console.log('hello');
-
 /* 
  * Benefits of TypeScript
  * variable
