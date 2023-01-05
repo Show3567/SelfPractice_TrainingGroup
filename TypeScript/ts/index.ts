@@ -149,4 +149,4 @@ enum Auth {
 }
 console.log(Auth.User);
 
-// const role: Auth = Auth.SuperUser;
+const role: Auth = Auth.SuperUser;

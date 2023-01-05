@@ -5,4 +5,5 @@ var Auth;
     Auth[Auth["User"] = 6] = "User";
 })(Auth || (Auth = {}));
 console.log(Auth.User);
+var role = Auth.SuperUser;
 //# sourceMappingURL=index.js.map
