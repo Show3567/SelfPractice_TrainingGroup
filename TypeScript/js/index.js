@@ -1,15 +1,8 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-function foo(obj) {
-    return __assign({}, obj);
-}
+var Auth;
+(function (Auth) {
+    Auth["SuperUser"] = "superUser";
+    Auth[Auth["Admin"] = 5] = "Admin";
+    Auth[Auth["User"] = 6] = "User";
+})(Auth || (Auth = {}));
+console.log(Auth.User);
 //# sourceMappingURL=index.js.map
