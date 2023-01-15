@@ -1,8 +1,21 @@
+// benefit of TypeScript
+/*
+ * writing bad code but not allow you catch type error at compile time rather then run time.
+ * 1. strong type will return you type error in compile time
+ * 2. complete oop pettern: classes, interfaces, abstruction... implements SOLID principles!
+ * 3. strong type support by IDE, make your develop more easy.
+ * 4. compile to ES5
+ * 5. quick start base on js
+ */
+
+// *veriable types: number, string, boolean, object, function;
 // const num: number = 5;
 
+// *array type: Array<string>, string[], [number, string];
 // const arr: string[] = [];
 // const arr1: [boolean, string, number] = [true, '', 0];
 
+//* unit
 // let hero: 'SuperMan' | 'SpiderMan' = 'SpiderMan';
 // hero = 'SuperMan';
 
