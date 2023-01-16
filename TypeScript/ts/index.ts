@@ -33,9 +33,9 @@
 //   while(true) {}
 // }
 
-//* type, interface
+//* interface vs. type
 // type argType = { name: string; age: number };
-type exampleFn = (num: number) => string;
+// type exampleFn = (num: number) => string;
 
 // function foo({ name, age }: { name: string; age?: number }): {
 // 	name: string;
@@ -54,6 +54,8 @@ type exampleFn = (num: number) => string;
 //   (obj: argType): argType;
 // }
 
+//* interface vs. class
+
 // // const foo: fnType = (obj) => {
 // //   return {...obj};
 // // }
@@ -61,11 +63,34 @@ type exampleFn = (num: number) => string;
 //   return {...obj};
 // }
 
+//* implement interface
+// interface Redio {
+//   openRadio: () => void;
+//   openRadio(): void;
+// }
+// interface Battery {
+//     batteryStatus: () => void;
+// }
+
+// class Mobile implements Redio, Battery {
+//     batteryStatus: () => void;
+
+//     openRadio(): void {
+//         throw new Error("Method not implemented.");
+//     }
+// }
+
 //* as
-interface argType {
-	name: string;
-	age: number;
-}
+// interface argType {
+// 	name: string;
+// 	age: number;
+// }
+
+//* enum
+
+//* class
+
+//* generic type
 
 // let obj: argType = {
 // 	name: "YY",
@@ -74,6 +99,8 @@ interface argType {
 // } as argType;
 
 // obj = { name: "YY", age: 45 };
+
+//* ganiric type
 
 // function getString(x: string, y: string): string[] {
 // 	return [x, y];
@@ -162,3 +189,5 @@ enum Auth {
 console.log(Auth.User);
 
 const role: Auth = Auth.SuperUser;
+
+//* Decorator
