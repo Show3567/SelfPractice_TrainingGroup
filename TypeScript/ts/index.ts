@@ -10,6 +10,8 @@
 
 // *veriable types: number, string, boolean, object, function;
 // const num: number = 5;
+// let num = 5;
+// num = true;
 
 // *array type: Array<string>, string[], [number, string];
 // const arr: string[] = [];
@@ -18,9 +20,6 @@
 //* unit
 // let hero: 'SuperMan' | 'SpiderMan' = 'SpiderMan';
 // hero = 'SuperMan';
-
-// let num = 5;
-// num = true;
 
 // let something: any = 42;
 // something.name;
