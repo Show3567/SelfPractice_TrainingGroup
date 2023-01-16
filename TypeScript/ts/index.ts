@@ -21,21 +21,21 @@
 // let hero: 'SuperMan' | 'SpiderMan' = 'SpiderMan';
 // hero = 'SuperMan';
 
+//* any, unknow, void, never
 // let something: any = 42;
 // something.name;
 
 // let unk: unknown = 56;
 // unk.name
 
-// console.log(typeof null);
-
 // function foo(): never {
 //   // throw new Error();
 //   while(true) {}
 // }
-// console.log(foo());
 
+//* type, interface
 // type argType = { name: string; age: number };
+type exampleFn = (num: number) => string;
 
 // function foo({ name, age }: { name: string; age?: number }): {
 // 	name: string;
