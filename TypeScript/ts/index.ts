@@ -28,6 +28,8 @@
 // let unk: unknown = 56;
 // unk.name
 
+// function foo(): void {}
+
 // function foo(): never {
 //   // throw new Error();
 //   while(true) {}
@@ -89,6 +91,15 @@
 //* enum
 
 //* class
+
+class Person {
+	constructor() {}
+
+	// overload? or make it more fixable;
+	foo(): Promise<string>;
+	foo(res: string): void;
+	foo(res?: string): void | Promise<string> {}
+}
 
 //* generic type
 
