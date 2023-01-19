@@ -147,6 +147,14 @@ class Person {
 // interface Radio {
 //     openRadio(): void;
 // }
+abstract class Radio {
+	abstract openRadio(): void;
+
+	hello() {
+		console.log("hello world!");
+	}
+}
+
 // interface Battery extends Radio {
 //     batteryStatus: () => void;
 // }
@@ -164,6 +172,12 @@ class Person {
 //     throw new Error("Method not implemented.");
 //   }
 // }
+
+class Mobile extends Radio {
+	openRadio(): void {
+		throw new Error("Method not implemented.");
+	}
+}
 
 // class Person {
 //   public aa: number = 56;
