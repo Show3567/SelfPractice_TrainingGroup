@@ -185,6 +185,10 @@ class Mobile extends Radio {
 	}
 }
 
+interface Example {
+	(): Object;
+}
+
 // class Person {
 //   public aa: number = 56;
 //   private bb: string = 'str';
