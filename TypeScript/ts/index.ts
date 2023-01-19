@@ -91,7 +91,6 @@
 //* enum
 
 //* class
-
 class Person {
 	constructor() {}
 
@@ -99,6 +98,14 @@ class Person {
 	foo(): Promise<string>;
 	foo(res: string): void;
 	foo(res?: string): void | Promise<string> {}
+}
+//* abstract class;
+abstract class Radio {
+	abstract openRadio(): void;
+
+	hello() {
+		console.log("hello world!");
+	}
 }
 
 //* generic type
@@ -143,17 +150,16 @@ class Person {
 //     }
 // }
 
-// //* SOLID
+/* SOLID
+ * S — Single Responsibility
+ * O — Open-Closed
+ * L — Liskov Substitution: class A, class B extends A: ------> const c: A = new B();
+ * I — Interface Segregation
+ * D — Dependency Inversion
+ */
 // interface Radio {
 //     openRadio(): void;
 // }
-abstract class Radio {
-	abstract openRadio(): void;
-
-	hello() {
-		console.log("hello world!");
-	}
-}
 
 // interface Battery extends Radio {
 //     batteryStatus: () => void;
