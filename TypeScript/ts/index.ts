@@ -178,7 +178,7 @@ abstract class Radio {
 //     throw new Error("Method not implemented.");
 //   }
 // }
-
+//* show git
 class Mobile extends Radio {
 	openRadio(): void {
 		throw new Error("Method not implemented.");
@@ -186,8 +186,15 @@ class Mobile extends Radio {
 }
 
 interface Example {
-	(): Object;
+	name: string;
 }
+interface Example {
+	age: number;
+}
+const user: Example = {
+	age: 12,
+	name: "David",
+};
 
 // class Person {
 //   public aa: number = 56;
