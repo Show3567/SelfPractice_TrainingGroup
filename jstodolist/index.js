@@ -2,7 +2,8 @@ console.clear();
 
 //* ~~~~~~~~~~~~~~~~~~~~~~~~ Api ~~~~~~~~~~~~~~~~~~~~~~~~
 const Api = (() => {
-  const baseUrl = "https://jsonplaceholder.typicode.com";
+  // const baseUrl = "https://jsonplaceholder.typicode.com";
+  const baseUrl = 'http://localhost:4232'
   const todopath = "todos";
 
   const getTodos = () =>
@@ -35,7 +36,8 @@ const Api = (() => {
 const View = (() => {
   const domstr = {
     todolist: "#todolist_container",
-    deletebtn: '.deletebtn'
+    deletebtn: '.deletebtn',
+    inputbox: '.todolist__input'
   };
 
   const render = (ele, tmp) => {
@@ -46,7 +48,7 @@ const View = (() => {
     arr.forEach((ele) => {
       tmp += `
         <li>
-          <span>${ele.title}</span>
+          <span>${ele.id}-${ele.title}</span>
           <button class="deletebtn" id="${ele.id}">X</button>
         </li>
       `;
@@ -64,6 +66,13 @@ const View = (() => {
 const Model = ((api, view) => {
   const { getTodos, addTodo, deleteTodo } = api;
 
+  class Todo {
+    constructor(title) {
+      this.userId = 66;
+      this.title = title;
+      this.completed = false;
+    }
+  }
   class State {
     #todos = [];
 
@@ -84,12 +93,28 @@ const Model = ((api, view) => {
     getTodos,
     addTodo,
     deleteTodo,
-    State
+    State,
+    Todo
   };
 })(Api, View);
+
 //* ~~~~~~~~~~~~~~~~~~~~~~~~ Controller ~~~~~~~~~~~~~~~~~~~~~~~~
 const Controller = ((model, view) => {
   const state = new model.State();
+
+  const addTodo = () => {
+    const inputbox = document.querySelector(view.domstr.inputbox);
+    inputbox.addEventListener('keyup', event => {
+      const inputstate = event.target.value;
+      if (event.code === 'Enter' && inputstate.trim() !== '') {
+        const newTodo = new model.Todo(inputstate);
+        model.addTodo(newTodo).then(val => {
+          state.todos = [val, ...state.todos];
+        });
+        event.target.value = '';
+      }
+    })
+  }
 
   const deleteTodo = () => {
     const todo_container = document.querySelector(view.domstr.todolist);
@@ -106,13 +131,14 @@ const Controller = ((model, view) => {
 
   const init = () => {
     model.getTodos().then((todos) => {
-      state.todos = todos;
+      state.todos = todos.reverse();
     });
   };
 
   const bootstrap = () => {
     init();
     deleteTodo();
+    addTodo();
   }
 
   return {

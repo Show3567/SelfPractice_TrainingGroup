@@ -212,3 +212,4 @@ console.log(obj, obj4);
 //   console.log('key', key, 'value', val);
 // });
 // console.log(Object.entries(obj));
+
