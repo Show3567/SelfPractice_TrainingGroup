@@ -68,7 +68,7 @@ const Model = ((api, view) => {
 
   class Todo {
     constructor(title) {
-      this.userId = 66;
+      this.userId = 5;
       this.title = title;
       this.completed = false;
     }
