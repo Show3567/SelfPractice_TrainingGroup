@@ -3,7 +3,7 @@ import { View } from "./view.js";
 
 //* ~~~~~~~~~~~~~~~~~~~~~~~~ Model ~~~~~~~~~~~~~~~~~~~~~~~~
 export const Model = ((api, view) => {
-  const { getTodos, addTodo, deleteTodo } = api;
+  const { getTodos: rename, addTodo, deleteTodo } = api;
 
   class Todo {
     constructor(title) {
@@ -29,7 +29,7 @@ export const Model = ((api, view) => {
   }
 
   return {
-    getTodos,
+    getTodos: rename,
     addTodo,
     deleteTodo,
     State,

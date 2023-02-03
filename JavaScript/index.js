@@ -50,13 +50,13 @@
 // obj.salary = 10000;
 
 // //* * object copy: shallow copy, deep copy
-const obj = {
-  name: 'TT',
-  age: 56,
-  arr: [
-    {name: 'DD', age: 45}
-  ], 
-}
+// const obj = {
+//   name: 'TT',
+//   age: 56,
+//   arr: [
+//     {name: 'DD', age: 45}
+//   ], 
+// }
 // // const obj2 = obj;
 // const obj3 = {...obj};
 
@@ -68,9 +68,9 @@ const obj = {
 //* structuredClone()
 //* Lodash | _.cloneDeep() Method
 
-console.log(JSON.stringify(obj))
-const obj4 = JSON.parse(JSON.stringify(obj));
-console.log(obj, obj4);
+// console.log(JSON.stringify(obj))
+// const obj4 = JSON.parse(JSON.stringify(obj));
+// console.log(obj, obj4);
 
 
 // const obj5 = structuredClone(obj);
@@ -213,3 +213,130 @@ console.log(obj, obj4);
 // });
 // console.log(Object.entries(obj));
 
+/**
+ * @class
+ * what is javascript, ECMAScript
+ * javascript vs. nodejs vs. ECMAScript
+ *
+ * Primitive Data
+ * Object Data or reference Data
+ *
+ * coercion
+ * equality == vs. ===
+ *
+ * var vs. let vs. const
+ *
+ * oop: Object oriented programming in JS
+ * encapsulation; inheritance; Poly-morph-ism; abstraction;
+ * constructer function, prototype chain
+*/
+// console.log(typeof ('test' / '12')); // 112
+// Number('test');
+// '12' === 12
+
+// function foo() {
+//   if (true) {
+//     function bar() {
+//       console.log(1);
+//     }
+//   }
+// }
+// bar();
+
+//* ES6
+//arrow function
+// class
+
+/*  * @class
+ * iife
+ * closure
+ * currying
+ *
+ * this
+ * call, apply, bind
+ *
+ * arrow function
+ *
+ * event loop
+ * */
+
+// (function() {
+// // }())
+// const fn = limitedFn(3, cb);
+// function limitedFn(num, cb) {
+//   let counter = num;
+
+//   return function(...args) {
+//     if (counter === 0) {
+//       console.log('over limited')
+//     } else {
+//       cb(...args);
+//       counter--;
+//     }
+//   }
+// }
+// fn() //* [counter: 3]
+// fn() //* [counter: 2]
+// fn() //* [counter: 1]
+
+// const arr = [1, 2, 3];
+
+// const rarr = arr.map(function(cur, i, arrself) {
+//   return cur + this.counter;
+// }, { counter: 45 });
+// console.log(rarr);
+// bind call apply
+
+// for (var i = 0; i < 5; i++) {
+//   (function(i) {
+
+//     setTimeout(() => console.log(i), i * 1000);
+//   })(i)
+// }
+
+//* interview question
+const first = [
+  { userid: 2, name: 'Velen' },
+  { userid: 56, name: 'Illidan' },
+  { userid: 23, name: 'Muradin' },
+  { userid: 12, name: 'Sylvanas' },
+  { userid: 44, name: 'Cenarius' },
+  { userid: 4, name: 'Gul\'Dan' }
+];
+
+const second = [
+  { userid: 2, role: 'Mage' },
+  { userid: 4, role: 'Worlock' },
+  { userid: 56, role: 'Demon Hunter' },
+  { userid: 66, role: 'Druid' },
+  { userid: 87, role: 'Shaman' },
+  { userid: 12, role: 'Hunter' },
+];
+
+function solution(...args) {
+  const arr = args.reduce((acc, cur) => [...acc, ...cur], []);
+  const map = {};
+
+  arr.forEach((ele) => {
+    map[ele.userid] = {
+      ...{ userid: null, name: null, role: null, },
+      ...map[ele.userid],
+      ...ele
+    };
+  });
+
+  console.log(Object.values(map));
+}
+
+// {
+//   2:  { userid: 2, role: 'Mage' },
+//   4:  { userid: 4, role: 'Worlock' },
+// }
+solution(first, second);
+// [
+//   { userid: 2, name: 'Velen', role: 'Mage' },
+//   ...
+//   { userid: 23, name: 'Muradin', role: null },
+//   ... 
+//   { userid: 87, name: null, role: 'Shaman' },
+// ]
