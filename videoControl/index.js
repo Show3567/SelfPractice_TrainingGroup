@@ -13,7 +13,7 @@ openCarmeraBtn.addEventListener('click', async (e) => {
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     vidioContainer.srcObject = stream;
   } catch (err) {
-    /* handle the error */
+    console.log('open video error: ', err);
   }
 });
 closeVarmeraBtn.addEventListener('click', () => {
