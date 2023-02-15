@@ -1,4 +1,3 @@
-
 const vidioContainer = document.querySelector('#videoInput');
 const openCarmeraBtn = document.querySelector('#show_video');
 const closeVarmeraBtn = document.querySelector('#close_video');
