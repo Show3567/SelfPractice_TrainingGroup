@@ -5,6 +5,7 @@
 		"removeComments": true,
 		"preserveConstEnums": true,
 		"outFile": "./js/index.js",
+		"experimentalDecorators": true,
 		"sourceMap": true
 	},
 	"include": ["./ts/index.ts"],
