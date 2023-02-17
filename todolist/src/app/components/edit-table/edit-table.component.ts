@@ -53,4 +53,11 @@ export class EditTableComponent implements OnInit {
       values: new Array(this.givenTable.header.length).fill(''),
     });
   }
+  deleteRow(id: number) {
+    const arr = this.givenTable.rows;
+    for (let i = id; i < arr.length; i++) {
+      arr[i].id--;
+    }
+    this.givenTable.rows.splice(id - 1, 1);
+  }
 }
