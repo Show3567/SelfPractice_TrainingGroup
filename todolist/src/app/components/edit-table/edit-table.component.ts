@@ -28,6 +28,29 @@ export class EditTableComponent implements OnInit {
       };
     }
   }
-  moveDown(id: number) {}
-  addRow(id: number) {}
+  moveDown(id: number) {
+    console.log(id);
+    if (id < this.givenTable.rows.length) {
+      const mark = this.givenTable.rows[id];
+      this.givenTable.rows[id] = {
+        ...this.givenTable.rows[id - 1],
+        id: id + 1,
+      };
+      this.givenTable.rows[id - 1] = {
+        ...mark,
+        id: id,
+      };
+      console.log(this.givenTable.rows);
+    }
+  }
+  addRow(id: number) {
+    const arr = this.givenTable.rows;
+    for (let i = id; i < arr.length; i++) {
+      arr[i].id++;
+    }
+    this.givenTable.rows.splice(id, 0, {
+      id,
+      values: new Array(this.givenTable.header.length).fill(''),
+    });
+  }
 }

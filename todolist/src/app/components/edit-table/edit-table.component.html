@@ -1,14 +1,15 @@
 <table>
   <tr>
     <th *ngFor="let header of givenTable.header">{{ header }}</th>
-    <th style="width: 100px">Btns</th>
+    <th>Btns</th>
   </tr>
   <tr *ngFor="let row of givenTable.rows">
     <td *ngFor="let item of row.values">{{ item }}</td>
     <td>
       <button style="color: green" (click)="moveUp(row.id)">Up</button>
-      <button style="color: violet">Down</button>
-      <button style="color: blue">Add</button>
+      <button style="color: violet" (click)="moveDown(row.id)">Down</button>
+      <button style="color: blue" (click)="addRow(row.id)">Add</button>
+      <button style="color: red">Delete</button>
     </td>
   </tr>
 </table>
