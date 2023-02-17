@@ -15,6 +15,14 @@ export class EditTableService {
         id: 2,
         values: ['2', 'b', 'b1'],
       },
+      {
+        id: 3,
+        values: ['3', 'c', 'c1'],
+      },
+      {
+        id: 4,
+        values: ['4', 'd', 'd1'],
+      },
     ],
   };
 
