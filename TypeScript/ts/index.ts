@@ -178,7 +178,7 @@ abstract class Radio {
 //     throw new Error("Method not implemented.");
 //   }
 // }
-//* show git
+// show git
 class Mobile extends Radio {
 	openRadio(): void {
 		throw new Error("Method not implemented.");
