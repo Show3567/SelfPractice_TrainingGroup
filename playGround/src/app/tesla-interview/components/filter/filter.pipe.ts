@@ -1,12 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Fruit } from 'src/app/app.component';
 
 @Pipe({
-  name: 'filter'
+  name: 'filter',
 })
 export class FilterPipe implements PipeTransform {
-
-  transform(value: unknown, ...args: unknown[]): unknown {
+  transform(items: Fruit[], ...args: unknown[]): unknown {
     return null;
   }
-
 }

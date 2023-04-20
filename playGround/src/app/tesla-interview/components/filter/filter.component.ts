@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Fruit } from 'src/app/app.component';
 
 @Component({
   selector: 'app-filter',
@@ -6,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent {
-  @Input() items!: { id: number; name: string }[];
+  @Input() items!: Fruit[];
 }
