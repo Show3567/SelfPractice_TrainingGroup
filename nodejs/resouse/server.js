@@ -1,7 +1,6 @@
 const http = require('http');
 
 const server = http.createServer((req, res, next) => {
-  console.log('server created!');
   if (req.url === '/') {
     console.log('base root for this listener!');
   } else if (req.url === '/api') {
