@@ -5,16 +5,16 @@
 
 const express = require('express');
 const app = express();
+const todolist = require('./routers/todolist.ts');
 
 const port = 3001;
 
-app.post('/api', (req, res) => {
-  console.log(111);
-  
-  res.send({
-    info: 'hello'
-  });
-});
+app.use(express.json());
+app.use('/todos', todolist);
+
+// app.get('/todos', (req, res) => {
+//   res.send(mydb.todolist);
+// });
 
 app.listen(port, (req, res, next) => {
   console.log(`listening on port ${port}...`);
