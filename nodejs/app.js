@@ -7,6 +7,8 @@ const express = require('express');
 const app = express();
 const todolist = require('./routers/todolist.ts');
 
+require('./start/db.js')();
+
 const port = 3001;
 
 app.use(express.json());
