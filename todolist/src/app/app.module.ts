@@ -9,6 +9,7 @@ import { TodolistComponent } from './components/todo-list/todo-list.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { TodoService } from './services/todo.service';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 export const baseUrl = new InjectionToken<string>('');
 
@@ -20,9 +21,9 @@ export const baseUrl = new InjectionToken<string>('');
     TodolistComponent,
     TodoItemComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
-    { provide: TodoService, useClass: TodoService },
+    TodoService,
     { provide: baseUrl, useValue: 'https://jsonplaceholder.typicode.com' },
   ],
   bootstrap: [AppComponent],

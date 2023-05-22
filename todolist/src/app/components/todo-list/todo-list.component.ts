@@ -14,19 +14,14 @@ import { TodoService } from '../../services/todo.service';
 @Component({
   selector: 'app-todolist',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.css'],
-  providers: [TodoService], // <----------------------------
+  styleUrls: ['./todo-list.component.scss'],
+  // providers: [TodoService], // <----------------------------
 })
 export class TodolistComponent implements OnInit {
   // service = new Service();
 
   private todoService = inject(TodoService); // <--------Inject service
-  todos$ = this.todoService.todolist$
-    .pipe
-    // tap(_ => {
-    //   throw new Error('error');
-    // })
-    ();
+  todos$ = this.todoService.todolist$;
   todosErr$ = this.todos$.pipe(
     ignoreElements(), // only pass complete and error;
     catchError((err) => {
