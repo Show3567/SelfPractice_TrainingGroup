@@ -1,0 +1,22 @@
+<header class="header">implement a todo list</header>
+
+<main class="content">
+  <section class="todolist">
+    <p *ngIf="todosErr$ | async as err">Hello - {{ err | json }}</p>
+    <header class="todolist__header">todo list</header>
+    <input
+      class="todolist__input"
+      placeholder="input your todo here..."
+      (keyup.enter)="addTodo()"
+      [(ngModel)]="todo.title"
+    />
+    <ul id="todolist_containter" *ngIf="todos$ | async as todos">
+      <app-todo-item
+        *ngFor="let todo of todos"
+        [todo]="todo"
+        (idemiter)="deleteTodo($event)"
+      ></app-todo-item>
+    </ul>
+    <button class="req_btn" (click)="sendNewRequest()">Req</button>
+  </section>
+</main>

@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BasicScrollComponent } from './basic-scroll.component';
+import { TodolistComponent } from './todo-list.component';
 
-describe('BasicScrollComponent', () => {
-  let component: BasicScrollComponent;
-  let fixture: ComponentFixture<BasicScrollComponent>;
+describe('TodoListComponent', () => {
+  let component: TodolistComponent;
+  let fixture: ComponentFixture<TodolistComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BasicScrollComponent],
+      declarations: [TodolistComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BasicScrollComponent);
+    fixture = TestBed.createComponent(TodolistComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
