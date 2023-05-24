@@ -29,7 +29,6 @@ export class EditTableComponent implements OnInit {
     }
   }
   moveDown(id: number) {
-    console.log(id);
     if (id < this.givenTable.rows.length) {
       const mark = this.givenTable.rows[id];
       this.givenTable.rows[id] = {
@@ -40,7 +39,6 @@ export class EditTableComponent implements OnInit {
         ...mark,
         id: id,
       };
-      console.log(this.givenTable.rows);
     }
   }
   addRow(id: number) {

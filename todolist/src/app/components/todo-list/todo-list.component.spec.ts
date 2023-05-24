@@ -1,20 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 import { TodolistComponent } from './todo-list.component';
-import { TodoService } from 'src/app/services/todo.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { baseUrl } from 'src/app/app.module';
-import { FormsModule } from '@angular/forms';
 import { Todo } from 'src/app/interfaces/todo.interface';
-import { By } from '@angular/platform-browser';
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-import { of } from 'rxjs';
+import { TodoService } from 'src/app/services/todo.service';
 
 const mocktodos: Todo[] = [
   {
@@ -57,7 +51,7 @@ describe('TodoListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, FormsModule],
+      imports: [FormsModule, HttpClientTestingModule],
       declarations: [TodolistComponent, TodoItemComponent],
       providers: [
         TodoService,
@@ -108,6 +102,9 @@ describe('TodoListComponent', () => {
       );
       expect(itemeles.length).toBe(mocktodos.length);
     });
+  });
+
+  describe('sendNewRequest', () => {
     it('should has an button, click it will trigger sendNewRequest fn', () => {
       const btns = fixture.debugElement.queryAll(By.css('button'));
       expect(btns.length).toBe(1);
@@ -118,4 +115,73 @@ describe('TodoListComponent', () => {
       expect(sendNewRequest).toHaveBeenCalled();
     });
   });
+
+  describe('deleteTodo', () => {
+    it('delete todo should be trigger id item emit an id', () => {
+      const deleteTodo = spyOn(component, 'deleteTodo');
+      component.todos$ = of(mocktodos);
+      fixture.detectChanges();
+
+      const item: TodoItemComponent = fixture.debugElement.query(
+        By.directive(TodoItemComponent)
+      ).componentInstance;
+      item.idemiter.emit(item.todo.id);
+
+      expect(deleteTodo).toHaveBeenCalledWith(mocktodos[0].id as number);
+    });
+  });
 });
+
+fdescribe('TodoListComponent With FackService', () => {
+  let fixture: ComponentFixture<TodolistComponent>;
+  let component: TodolistComponent;
+  let fackTodoService: TodoService;
+
+  beforeEach(async () => {
+    fackTodoService = jasmine.createSpyObj<TodoService>('TodoService', {
+      todolist$: of(mocktodos),
+      currentTodoList: [],
+      getTodos: undefined,
+      deleteTodo: undefined,
+      addTodo: undefined,
+    });
+
+    await TestBed.configureTestingModule({
+      imports: [FormsModule, HttpClientTestingModule],
+      declarations: [TodolistComponent],
+      providers: [
+        // TodoService,
+        {
+          provide: TodoService,
+          useValue: fackTodoService,
+        },
+        // {
+        //   provide: TodoService,
+        //   useValue: fackTodoService,
+        // },
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TodolistComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should call service deleteTodo method', () => {});
+});
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// const fackTodoService: Pick<TodoService, keyof TodoService> = {
+//   todolist$: of(mocktodos),
+//   currentTodoList: [],
+
+//   getTodos(): Observable<Todo[]> {
+//     return of(mocktodos);
+//   },
+//   deleteTodo(id: number): Observable<null> {
+//     return of(null);
+//   },
+//   addTodo(todo: Todo): Observable<string | Todo> {
+//     return of(todo);
+//   },
+// };

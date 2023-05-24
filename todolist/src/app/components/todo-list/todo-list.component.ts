@@ -29,12 +29,10 @@ export class TodolistComponent implements OnInit {
 
   ngOnInit(): void {
     this.todoService.getTodos().subscribe();
-    console.log(this.todoService.currentTodoList);
   }
 
   deleteTodo(id: number) {
     this.todoService.deleteTodo(id).subscribe();
-    console.log(this.todoService.currentTodoList);
   }
 
   addTodo() {

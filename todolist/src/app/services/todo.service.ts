@@ -40,7 +40,6 @@ export class TodoService {
         }),
         shareReplay(1),
         catchError((err) => {
-          console.log('got an error: ', err);
           return throwError(() => err);
         })
       );
