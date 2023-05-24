@@ -1,13 +1,5 @@
-import { Component, Inject, inject, OnInit } from '@angular/core';
-import {
-  catchError,
-  ignoreElements,
-  mergeMap,
-  Observable,
-  of,
-  tap,
-  throwError,
-} from 'rxjs';
+import { Component, inject, OnInit } from '@angular/core';
+import { catchError, ignoreElements, of } from 'rxjs';
 import { Todo } from '../../interfaces/todo.interface';
 import { TodoService } from '../../services/todo.service';
 
@@ -18,8 +10,6 @@ import { TodoService } from '../../services/todo.service';
   // providers: [TodoService], // <----------------------------
 })
 export class TodolistComponent implements OnInit {
-  // service = new Service();
-
   private todoService = inject(TodoService); // <--------Inject service
   todos$ = this.todoService.todolist$;
   todosErr$ = this.todos$.pipe(
@@ -38,12 +28,7 @@ export class TodolistComponent implements OnInit {
   // constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
-    this.todoService.getTodos().subscribe(
-      () => {},
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.todoService.getTodos().subscribe();
     console.log(this.todoService.currentTodoList);
   }
 

@@ -5,16 +5,17 @@ import {
   catchError,
   mergeMap,
   Observable,
-  of,
   retry,
   shareReplay,
   tap,
   throwError,
 } from 'rxjs';
-import { baseUrl } from '../app.module';
+import { baseUrl } from './../app.module';
 import { Todo } from '../interfaces/todo.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TodoService {
   private readonly todoPath = 'todos';
   private requestMap: { [key: string]: Observable<Todo[]> } = {};
@@ -40,7 +41,7 @@ export class TodoService {
         shareReplay(1),
         catchError((err) => {
           console.log('got an error: ', err);
-          return throwError(() => 'err');
+          return throwError(() => err);
         })
       );
     }
@@ -58,12 +59,12 @@ export class TodoService {
 
     return this.http
       .delete<null>([this.baseUrl, this.todoPath, id].join('/'))
-      .pipe(
-        mergeMap((_) => {
-          return throwError(() => 'err');
-        }),
-        retry(4) // if error, retry this obs;
-      );
+      .pipe
+      // mergeMap((_) => {
+      //   return throwError(() => 'err');
+      // }),
+      // retry(4) // if error, retry this obs;
+      ();
   }
 
   addTodo(todo: Todo): Observable<Todo | string> {

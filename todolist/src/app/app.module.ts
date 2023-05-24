@@ -7,8 +7,7 @@ import { EditTableComponent } from './components/edit-table/edit-table.component
 import { BasicScrollComponent } from './components/basic-scroll/basic-scroll.component';
 import { TodolistComponent } from './components/todo-list/todo-list.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
-import { TodoService } from './services/todo.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 export const baseUrl = new InjectionToken<string>('');
@@ -21,10 +20,18 @@ export const baseUrl = new InjectionToken<string>('');
     TodolistComponent,
     TodoItemComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
   providers: [
-    TodoService,
-    { provide: baseUrl, useValue: 'https://jsonplaceholder.typicode.com' },
+    {
+      provide: baseUrl,
+      useValue: 'https://jsonplaceholder.typicode.com',
+    },
   ],
   bootstrap: [AppComponent],
 })
