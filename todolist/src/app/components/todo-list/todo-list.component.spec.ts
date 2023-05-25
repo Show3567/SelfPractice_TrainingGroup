@@ -135,30 +135,25 @@ describe('TodoListComponent', () => {
 fdescribe('TodoListComponent With FackService', () => {
   let fixture: ComponentFixture<TodolistComponent>;
   let component: TodolistComponent;
-  let fackTodoService: TodoService;
+  let fackTodoService: jasmine.SpyObj<TodoService>;
 
   beforeEach(async () => {
     fackTodoService = jasmine.createSpyObj<TodoService>('TodoService', {
       todolist$: of(mocktodos),
       currentTodoList: [],
-      getTodos: undefined,
+      getTodos: of(mocktodos),
       deleteTodo: undefined,
-      addTodo: undefined,
+      addTodo: of(mocktodos[0]),
     });
 
     await TestBed.configureTestingModule({
       imports: [FormsModule, HttpClientTestingModule],
       declarations: [TodolistComponent],
       providers: [
-        // TodoService,
         {
           provide: TodoService,
           useValue: fackTodoService,
         },
-        // {
-        //   provide: TodoService,
-        //   useValue: fackTodoService,
-        // },
       ],
     }).compileComponents();
 
@@ -171,17 +166,19 @@ fdescribe('TodoListComponent With FackService', () => {
 });
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// const fackTodoService: Pick<TodoService, keyof TodoService> = {
-//   todolist$: of(mocktodos),
-//   currentTodoList: [],
+/* 
+    const fackTodoService: Pick<TodoService, keyof TodoService> = {
+      todolist$: of(mocktodos),
+      currentTodoList: [],
 
-//   getTodos(): Observable<Todo[]> {
-//     return of(mocktodos);
-//   },
-//   deleteTodo(id: number): Observable<null> {
-//     return of(null);
-//   },
-//   addTodo(todo: Todo): Observable<string | Todo> {
-//     return of(todo);
-//   },
-// };
+      getTodos(): Observable<Todo[]> {
+        return of(mocktodos);
+      },
+      deleteTodo(id: number): Observable<null> {
+        return of(null);
+      },
+      addTodo(todo: Todo): Observable<string | Todo> {
+        return of(todo);
+      },
+    };
+ */
