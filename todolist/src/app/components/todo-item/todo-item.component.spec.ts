@@ -48,6 +48,7 @@ describe('TodoItemComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
   it('should get todo from parent component', () => {
     const childfixture: DebugElement = parentFixture.debugElement.query(
       By.css('app-todo-item')
@@ -55,7 +56,8 @@ describe('TodoItemComponent', () => {
     const childcomponent: TodoItemComponent = childfixture.componentInstance;
     expect(childcomponent.todo).toEqual(mocktodo);
   });
-  xit('should emit todoid to parent', () => {
+
+  it('should emit todoid to parent', () => {
     const childfixture: DebugElement = parentFixture.debugElement.query(
       By.css('app-todo-item')
     );
@@ -67,8 +69,5 @@ describe('TodoItemComponent', () => {
     deleteBtn.triggerEventHandler('click');
 
     expect(emiterSpy).toHaveBeenCalled();
-
-    const spy = spyOn(parentComponent, 'getTodoId');
-    expect(spy).toHaveBeenCalled();
   });
 });
