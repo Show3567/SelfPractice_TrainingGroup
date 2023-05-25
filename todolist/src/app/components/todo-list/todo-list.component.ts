@@ -11,8 +11,13 @@ import { TodoService } from '../../services/todo.service';
 })
 export class TodolistComponent implements OnInit {
   private todoService = inject(TodoService); // <--------Inject service
-  todos$!: Observable<Todo[]>;
-  todosErr$!: Observable<any>;
+  todos$: Observable<Todo[]> = this.todoService.todolist$; // behaviousSubject.asObservable;
+  todosErr$ = this.todos$.pipe(
+    ignoreElements(), // only pass complete and error;
+    catchError((err) => {
+      return of('this is an err can be catch by async');
+    })
+  ); // to pass an Err obs;
 
   todo: Todo = {
     userId: 34,
@@ -20,14 +25,9 @@ export class TodolistComponent implements OnInit {
     completed: false,
   };
 
+  // constructor(private todoService: TodoService) {}
+
   ngOnInit(): void {
-    this.todos$ = this.todoService.todolist$; // behaviousSubject.asObservable;
-    this.todosErr$ = this.todos$.pipe(
-      ignoreElements(), // only pass complete and error;
-      catchError((err) => {
-        return of('this is an err can be catch by async');
-      })
-    ); // to pass an Err obs;
     this.todoService.getTodos().subscribe();
   }
 

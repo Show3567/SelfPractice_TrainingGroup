@@ -129,6 +129,15 @@ describe('TodoListComponent', () => {
 
       expect(deleteTodo).toHaveBeenCalledWith(mocktodos[0].id as number);
     });
+
+    // it('deleteTodo in the todoService should be called', () => {
+    //   const service = jasmine.createSpyObj<TodoService>('TodoService', [
+    //     'deleteTodo',
+    //   ]);
+    //   service.deleteTodo.and.returnValues(of(null));
+
+    //   expect(service.deleteTodo).toHaveBeenCalled();
+    // });
   });
 });
 
@@ -138,17 +147,19 @@ fdescribe('TodoListComponent With FackService', () => {
   let fackTodoService: jasmine.SpyObj<TodoService>;
 
   beforeEach(async () => {
-    fackTodoService = jasmine.createSpyObj<TodoService>('TodoService', {
-      todolist$: of(mocktodos),
-      currentTodoList: [],
-      getTodos: of(mocktodos),
-      deleteTodo: undefined,
-      addTodo: of(mocktodos[0]),
-    });
+    fackTodoService = jasmine.createSpyObj<TodoService>(
+      'TodoService',
+      ['getTodos', 'deleteTodo', 'addTodo'],
+      {
+        todolist$: of(mocktodos),
+        currentTodoList: [],
+      }
+    );
+    fackTodoService.getTodos.and.returnValue(of(mocktodos));
 
     await TestBed.configureTestingModule({
       imports: [FormsModule, HttpClientTestingModule],
-      declarations: [TodolistComponent],
+      declarations: [TodolistComponent, TodoItemComponent],
       providers: [
         {
           provide: TodoService,
@@ -164,21 +175,3 @@ fdescribe('TodoListComponent With FackService', () => {
 
   it('should call service deleteTodo method', () => {});
 });
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/* 
-    const fackTodoService: Pick<TodoService, keyof TodoService> = {
-      todolist$: of(mocktodos),
-      currentTodoList: [],
-
-      getTodos(): Observable<Todo[]> {
-        return of(mocktodos);
-      },
-      deleteTodo(id: number): Observable<null> {
-        return of(null);
-      },
-      addTodo(todo: Todo): Observable<string | Todo> {
-        return of(todo);
-      },
-    };
- */
