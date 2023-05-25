@@ -13,7 +13,7 @@ import { TodoService } from 'src/app/services/todo.service';
 const mocktodos: Todo[] = [
   {
     userId: 1,
-    id: 18,
+    id: 188,
     title: 'dolorum est consequatur ea mollitia in culpa',
     completed: false,
   },
@@ -79,20 +79,24 @@ describe('TodoListComponent', () => {
       expect(headers[0].classes['header']).toBe(true);
       expect(headers[1].classes['todolist__header']).toBe(true);
     });
+
     it('should has a main', () => {
       const mains = fixture.debugElement.queryAll(By.css('main'));
 
       expect(mains.length).toBe(1);
       expect(mains[0].classes['content']).toBe(true);
     });
+
     it('should has an inputbox', () => {
       const inputs = fixture.debugElement.queryAll(By.css('input'));
       expect(inputs.length).toBe(1);
     });
+
     it('should has an ul', () => {
       const uls = fixture.debugElement.queryAll(By.css('ul'));
       expect(uls.length).toBe(1);
     });
+
     it('should has some todoitem in the ul', () => {
       component.todos$ = of(mocktodos);
       fixture.detectChanges();
@@ -110,9 +114,12 @@ describe('TodoListComponent', () => {
       expect(btns.length).toBe(1);
 
       const sendNewRequest = spyOn(component, 'sendNewRequest');
-      btns[0].triggerEventHandler('click');
 
+      btns[0].triggerEventHandler('click');
       expect(sendNewRequest).toHaveBeenCalled();
+      btns[0].triggerEventHandler('click');
+      btns[0].triggerEventHandler('click');
+      expect(sendNewRequest).toHaveBeenCalledTimes(3);
     });
   });
 
@@ -169,6 +176,7 @@ describe('TodoListComponent With FackService', () => {
       return of(null);
     });
     component.deleteTodo(12);
+
     expect(spy).toHaveBeenCalled();
   });
 
