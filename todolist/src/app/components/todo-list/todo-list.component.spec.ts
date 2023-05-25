@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 
 import { TodolistComponent } from './todo-list.component';
 import { baseUrl } from 'src/app/app.module';
@@ -129,19 +129,10 @@ describe('TodoListComponent', () => {
 
       expect(deleteTodo).toHaveBeenCalledWith(mocktodos[0].id as number);
     });
-
-    // it('deleteTodo in the todoService should be called', () => {
-    //   const service = jasmine.createSpyObj<TodoService>('TodoService', [
-    //     'deleteTodo',
-    //   ]);
-    //   service.deleteTodo.and.returnValues(of(null));
-
-    //   expect(service.deleteTodo).toHaveBeenCalled();
-    // });
   });
 });
 
-fdescribe('TodoListComponent With FackService', () => {
+describe('TodoListComponent With FackService', () => {
   let fixture: ComponentFixture<TodolistComponent>;
   let component: TodolistComponent;
   let fackTodoService: jasmine.SpyObj<TodoService>;
@@ -173,5 +164,65 @@ fdescribe('TodoListComponent With FackService', () => {
     fixture.detectChanges();
   });
 
-  it('should call service deleteTodo method', () => {});
+  it('should call service deleteTodo method when trigger deleteTodo in component', () => {
+    const spy = fackTodoService.deleteTodo.and.callFake((id: number) => {
+      return of(null);
+    });
+    component.deleteTodo(12);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call service addTodo method when trigger addTodo in component', () => {
+    const spy = fackTodoService.addTodo.and.callFake((todo: Todo) => {
+      return of(todo);
+    });
+    const testObj = {
+      todo: {
+        userId: 12,
+        title: 'hello',
+        completed: false,
+      },
+      todoService: fackTodoService,
+    };
+    component.addTodo.call(testObj);
+    expect(spy).toHaveBeenCalledWith(testObj.todo);
+  });
+
+  it('service addTodo method not been called when new todo title is empty', () => {
+    const spy = fackTodoService.addTodo.and.callFake((todo: Todo) => {
+      return of(todo);
+    });
+    const testObj = {
+      todo: {
+        userId: 12,
+        title: '',
+        completed: false,
+      },
+      todoService: fackTodoService,
+    };
+    component.addTodo.call(testObj);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('getTodos method in service should be called when trigger sendNewRequest fn', () => {
+    const spy = fackTodoService.getTodos.and.callFake(() => {
+      return of(mocktodos);
+    });
+
+    component.sendNewRequest();
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should return error message when err in todos$', () => {
+    const errmsg = 'this is an err can be catch by async';
+    fackTodoService.todolist$.pipe(
+      tap(() => {
+        throw new Error(errmsg);
+      })
+    );
+
+    component.todosErr$.subscribe((msg) => {
+      expect(msg).toBe(errmsg);
+    });
+  });
 });

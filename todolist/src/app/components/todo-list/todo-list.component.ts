@@ -14,9 +14,7 @@ export class TodolistComponent implements OnInit {
   todos$: Observable<Todo[]> = this.todoService.todolist$; // behaviousSubject.asObservable;
   todosErr$ = this.todos$.pipe(
     ignoreElements(), // only pass complete and error;
-    catchError((err) => {
-      return of('this is an err can be catch by async');
-    })
+    catchError((err) => of(err))
   ); // to pass an Err obs;
 
   todo: Todo = {
