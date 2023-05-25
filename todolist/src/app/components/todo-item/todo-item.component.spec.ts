@@ -5,9 +5,9 @@ import { Todo } from 'src/app/interfaces/todo.interface';
 
 @Component({
   selector: 'app-todolist',
-  template: ` <app-todo-item [id]="todo.id"></app-todo-item> `,
+  template: ` <app-todo-item [todo]="todo"></app-todo-item> `,
 })
-class TodolistComponent {
+class TestTodolistComponent {
   todo: Todo = {
     id: 12,
     userId: 12,
@@ -19,18 +19,24 @@ class TodolistComponent {
 describe('TodoItemComponent', () => {
   let component: TodoItemComponent;
   let fixture: ComponentFixture<TodoItemComponent>;
+  let parentComponent: TestTodolistComponent;
+  let parentFixture: ComponentFixture<TestTodolistComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TodoItemComponent, TodolistComponent],
+      declarations: [TodoItemComponent, TestTodolistComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TodoItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    parentFixture = TestBed.createComponent(TestTodolistComponent);
+    parentComponent = fixture.componentInstance;
+    parentFixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
