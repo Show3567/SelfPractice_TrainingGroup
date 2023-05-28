@@ -12,8 +12,6 @@ import { Component } from '@angular/core';
   selector: 'app-todolist',
 })
 class TodolistComponent {}
-// @Component({})
-// class TodoItemComponent {}
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;

@@ -28,6 +28,7 @@ class TestTodolistComponent {
 describe('TodoItemComponent', () => {
   let component: TodoItemComponent;
   let fixture: ComponentFixture<TodoItemComponent>;
+
   let parentComponent: TestTodolistComponent;
   let parentFixture: ComponentFixture<TestTodolistComponent>;
 
