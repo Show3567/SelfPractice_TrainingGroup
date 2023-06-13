@@ -126,6 +126,7 @@ describe('TodoListComponent', () => {
   describe('deleteTodo', () => {
     it('delete todo should be trigger id item emit an id', () => {
       const deleteTodo = spyOn(component, 'deleteTodo');
+      // deleteTodo.and.returnValue()
       component.todos$ = of(mocktodos);
       fixture.detectChanges();
 
