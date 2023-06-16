@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Anna",
+      "purchase": 250
+    },
+    {
+      "id": 2,
+      "name": "Anna",
+      "purchase": 750
+    },
+    {
+      "id": 3,
+      "name": "Anna",
+      "purchase": 850
+    },
+    {
+      "id": 4,
+      "name": "Anna",
+      "purchase": 40
+    },
+    {
+      "id": 5,
+      "name": "Anna",
+      "purchase": 86
+    },
+    {
+      "id": 6,
+      "name": "Anna",
+      "purchase": 534
+    },
+    {
+      "id": 7,
+      "name": "Anna",
+      "purchase": 92
+    }
+  ]
+}
