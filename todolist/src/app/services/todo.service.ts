@@ -85,4 +85,8 @@ export class TodoService {
         })
       );
   }
+
+  getJson() {
+    return this.http.get('assets/mock.json');
+  }
 }
