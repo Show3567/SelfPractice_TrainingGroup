@@ -1,13 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import {
-  Observable,
-  Subscription,
-  debounceTime,
-  filter,
-  map,
-  switchMap,
-} from 'rxjs';
+import { Subscription, debounceTime, switchMap } from 'rxjs';
 import { CardItem } from 'src/app/services/book.interface';
 import { BookService } from 'src/app/services/book.service';
 
@@ -51,22 +44,28 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.recommendIndex--;
     } else if (
       event.code === 'ArrowDown' &&
-      this.recommendIndex < this.bookService.currentBooksNumber
+      this.recommendIndex < this.bookService.currentBooksNumber - 1
     ) {
       this.recommendIndex++;
     } else if (event.code === 'Enter' && this.recommendIndex > -1) {
-      this.searchBook.setValue(this.booklist[this.recommendIndex], {
+      this.searchBook.setValue(this.booklist[this.recommendIndex].bookname, {
         emitEvent: false,
       });
+      this.bookService.selectBook(this.booklist[this.recommendIndex]);
       this.bookService.emptyList();
       this.recommendIndex = -1;
     }
   }
 
-  selectRecommend(name: string) {
-    this.searchBook.setValue(name, { emitEvent: false });
+  selectRecommend(item: CardItem) {
+    this.searchBook.setValue(item.bookname, { emitEvent: false });
     this.bookService.emptyList();
     this.recommendIndex = -1;
+    this.bookService.selectBook(item);
+  }
+
+  emptyInput() {
+    this.searchBook.setValue('');
   }
 
   mouseoverEvent(index: number) {

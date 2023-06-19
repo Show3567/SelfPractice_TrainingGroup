@@ -1,6 +1,8 @@
 <main>
   <div>Mark down</div>
   <input type="text" [formControl]="searchBook" list="recommend" />
+  <button (click)="emptyInput()">Empty</button>
+  <hr />
   <section>
     <div
       class="recommend"
@@ -8,7 +10,7 @@
       [ngClass]="{
         recommendSelect: i === recommendIndex
       }"
-      (click)="selectRecommend(item.bookname)"
+      (click)="selectRecommend(item)"
       (mouseover)="mouseoverEvent(i)"
     >
       <img [src]="item.bookimg" alt="" />
