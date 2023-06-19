@@ -62,4 +62,7 @@ export class SearchComponent implements OnInit {
     this.bookService.emptyList();
     this.recommendIndex = -1;
   }
+  mouseoverEvent(index: number) {
+    this.recommendIndex = index;
+  }
 }
