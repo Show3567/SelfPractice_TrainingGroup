@@ -1,1 +1,16 @@
-<p>search works!</p>
+<main>
+  <div>Mark down</div>
+  <input type="text" [formControl]="searchBook" list="recommend" />
+  <section>
+    <div
+      class="recommend"
+      *ngFor="let name of booklist; let i = index"
+      [ngClass]="{
+        recommendSelect: i === recommendIndex
+      }"
+      (click)="selectRecommend(name)"
+    >
+      {{ name }}
+    </div>
+  </section>
+</main>
