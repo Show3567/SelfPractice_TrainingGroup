@@ -14,4 +14,29 @@ export class AppComponent {
   ngOnInit(): void {
     this.todoService.getJson().subscribe(console.log);
   }
+
+  keyupEvent() {
+    console.log('keyup');
+  }
+  clickEvent() {
+    console.log('click');
+  }
+  keydownEvent() {
+    console.log('keydown');
+  }
+  keypressEvent() {
+    console.log('keypress');
+  }
+  mousedownEvent() {
+    console.log('mousedown');
+  }
+  focusEvent() {
+    console.log('focus');
+  }
+  blurEvent() {
+    console.log('blur');
+  }
+  dblclickEvent() {
+    console.log('doubleclick');
+  }
 }

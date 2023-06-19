@@ -5,3 +5,15 @@
 </div>
 
 <app-todolist></app-todolist>
+
+<input
+  type="text"
+  (keyup)="keyupEvent()"
+  (click)="clickEvent()"
+  (keydown)="keydownEvent()"
+  (keypress)="keypressEvent()"
+  (mousedown)="mousedownEvent()"
+  (dblclick)="dblclickEvent()"
+  (focus)="focusEvent()"
+  (blur)="blurEvent()"
+/>
