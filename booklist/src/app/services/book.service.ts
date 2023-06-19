@@ -9,6 +9,9 @@ import { BookItem, CardItem, GoodBookRes } from './book.interface';
 export class BookService {
   private readonly baseUrl = 'https://www.googleapis.com/books/v1/volumes?q=';
 
+  private readonly selectedBook$ = new BehaviorSubject<CardItem | null>(null);
+  currentBook$ = this.selectedBook$.asObservable();
+
   private readonly books$ = new BehaviorSubject<CardItem[]>([]);
   booklist$ = this.books$.asObservable();
 
@@ -49,5 +52,8 @@ export class BookService {
   }
   emptyList() {
     this.books$.next([]);
+  }
+  selectBook(book: CardItem) {
+    this.selectedBook$.next(book);
   }
 }

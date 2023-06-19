@@ -1,6 +1,13 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, debounceTime, filter, map, switchMap } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  debounceTime,
+  filter,
+  map,
+  switchMap,
+} from 'rxjs';
 import { CardItem } from 'src/app/services/book.interface';
 import { BookService } from 'src/app/services/book.service';
 
@@ -9,10 +16,34 @@ import { BookService } from 'src/app/services/book.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
   searchBook: FormControl = new FormControl('');
-  booklist!: string[];
+  booklist!: CardItem[];
   recommendIndex: number = -1;
+
+  sbp = new Subscription();
+
+  constructor(private readonly bookService: BookService) {}
+
+  ngOnInit(): void {
+    this.sbp = this.bookService.booklist$.subscribe((data) => {
+      this.booklist = data;
+    });
+
+    this.sbp.add(
+      this.searchBook.valueChanges
+        .pipe(
+          debounceTime(500),
+          switchMap((bookname) => {
+            return this.bookService.getBooks(bookname);
+          })
+        )
+        .subscribe()
+    );
+  }
+  ngOnDestroy(): void {
+    this.sbp.unsubscribe();
+  }
 
   @HostListener('document:keyup', ['$event'])
   selectRecommendByArrowButon(event: KeyboardEvent) {
@@ -32,36 +63,12 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  constructor(private readonly bookService: BookService) {}
-
-  ngOnInit(): void {
-    this.bookService.booklist$
-      .pipe(
-        map((cardbooks: CardItem[]) => {
-          return cardbooks.reduce((acc: string[], cur: CardItem) => {
-            acc.push(cur.bookname);
-            return acc;
-          }, []);
-        })
-      )
-      .subscribe((data) => {
-        this.booklist = data;
-      });
-
-    this.searchBook.valueChanges
-      .pipe(
-        debounceTime(500),
-        switchMap((bookname) => {
-          return this.bookService.getBooks(bookname);
-        })
-      )
-      .subscribe();
-  }
   selectRecommend(name: string) {
     this.searchBook.setValue(name, { emitEvent: false });
     this.bookService.emptyList();
     this.recommendIndex = -1;
   }
+
   mouseoverEvent(index: number) {
     this.recommendIndex = index;
   }

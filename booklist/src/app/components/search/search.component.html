@@ -4,14 +4,17 @@
   <section>
     <div
       class="recommend"
-      *ngFor="let name of booklist; let i = index"
+      *ngFor="let item of booklist; let i = index"
       [ngClass]="{
         recommendSelect: i === recommendIndex
       }"
-      (click)="selectRecommend(name)"
+      (click)="selectRecommend(item.bookname)"
       (mouseover)="mouseoverEvent(i)"
     >
-      {{ name }}
+      <img [src]="item.bookimg" alt="" />
+      <span>
+        {{ item.bookname }}
+      </span>
     </div>
   </section>
 </main>

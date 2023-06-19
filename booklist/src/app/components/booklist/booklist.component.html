@@ -1,1 +1,5 @@
-<p>booklist works!</p>
+<main *ngIf="currentItem">
+  <img [src]="currentItem.bookimg" alt="" />
+  <div>{{ currentItem.authors | json }}</div>
+  <div>{{ currentItem.description }}</div>
+</main>
