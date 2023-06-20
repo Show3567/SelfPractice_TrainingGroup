@@ -1,0 +1,20 @@
+<main>
+  <input type="text" [formControl]="searchBook" />
+  <button (click)="clearInput()">clear</button>
+  <section>
+    <div
+      class="recommend"
+      *ngFor="let card of recommendlist; let i = index"
+      (click)="handleClick(card)"
+      (mouseenter)="handlemouseenter()"
+      [ngClass]="{
+        recommendSelect: i === index
+      }"
+    >
+      <img [src]="card.bookimg" alt="" />
+      <span>{{ card.bookname }}</span>
+    </div>
+  </section>
+</main>
+
+<!-- <form [formGroup]="form"></form> -->
