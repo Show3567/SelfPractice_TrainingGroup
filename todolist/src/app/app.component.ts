@@ -7,7 +7,18 @@ import { TodoService } from './services/todo.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = signal('todolist');
+  title = signal<string>('todolist');
+  quantity = signal(1);
+
+  qtyAvailable = signal([1, 2, 3, 4, 5, 6]);
+
+  selectedVehicle = signal<Vehicle>({
+    id: 1,
+    name: 'AT-AT',
+    price: 19416.13,
+  });
+
+  vehicles = signal<Vehicle[]>([]);
 
   constructor(private todoService: TodoService) {}
 
@@ -39,4 +50,10 @@ export class AppComponent {
   dblclickEvent() {
     console.log('doubleclick');
   }
+}
+
+export interface Vehicle {
+  id: number;
+  name: string;
+  price: number;
 }
