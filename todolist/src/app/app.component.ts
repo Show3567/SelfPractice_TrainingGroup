@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TodoService } from './services/todo.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { TodoService } from './services/todo.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'todolist';
+  title = signal('todolist');
 
   constructor(private todoService: TodoService) {}
 

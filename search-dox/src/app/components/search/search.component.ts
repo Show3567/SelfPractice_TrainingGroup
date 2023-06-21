@@ -10,7 +10,7 @@ import { BookService } from 'src/app/services/book.service';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit, OnDestroy {
-  searchBook = new FormControl('');
+  searchBook: FormControl = new FormControl('');
   bookname = '';
   index = -1;
   sbp = new Subscription();
@@ -22,12 +22,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.sbp = this.searchBook.valueChanges
       .pipe(
         debounceTime(500),
-        //     // tap((val: string) => {
-        //     //   this.handleKeyup()
-        //     // })
-        switchMap((val) => {
-          const val2 = val !== null ? val : '';
-          return this.bookService.getBooks(val2);
+        switchMap((val: string) => {
+          return this.bookService.getBooks(val);
         })
       )
       .subscribe();
