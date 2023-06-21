@@ -1,3 +1,18 @@
+<div class="sum">
+  <div class="x">
+    <button (click)="incressx()">+</button>
+    {{ x() }}
+    <button (click)="decressx()">-</button>
+  </div>
+  <div class="y">
+    <button (click)="incressy()">+</button>
+    {{ y() }}
+    <button (click)="decressy()">-</button>
+  </div>
+  <div>
+    {{ sum() }}
+  </div>
+</div>
 <button (click)="getTodos()">GetTodos</button>
 <ul>
   <li *ngFor="let item of todolist()">
