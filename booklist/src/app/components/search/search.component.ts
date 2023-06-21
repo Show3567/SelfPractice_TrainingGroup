@@ -14,7 +14,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   booklist!: CardItem[];
   recommendIndex: number = -1;
 
-  sbp = new Subscription();
+  private sbp = new Subscription();
 
   constructor(private readonly bookService: BookService) {}
 
@@ -27,7 +27,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.searchBook.valueChanges
         .pipe(
           debounceTime(500),
-          switchMap((bookname) => {
+          switchMap((bookname: string) => {
             return this.bookService.getBooks(bookname);
           })
         )
