@@ -14,10 +14,14 @@ export class TodoListComponent {
 
   ngOnInit(): void {
     this.todolist = this.todoService.todos;
-    this.todoService.getTodos().subscribe();
+    this.getTodos();
   }
 
   deleteTodo(id: number) {
     this.todoService.deleteTodo(id);
+  }
+
+  getTodos() {
+    this.todoService.getTodos().subscribe();
   }
 }
