@@ -1,9 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Todo } from './todo.interface';
+import { tap } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoService {
+  baseUrl = 'https://jsonplaceholder.typicode.com/todos';
 
-  constructor() { }
+  todos = signal<Todo[]>([]);
+
+  constructor(private readonly http: HttpClient) {}
+
+  getTodos() {
+    return this.http.get<Todo[]>(this.baseUrl).pipe(
+      tap((todos) => {
+        this.todos.set(todos);
+      })
+    );
+  }
+
+  deleteTodo(id: number) {
+    this.todos.update((list) => {
+      return list.filter((todo) => +todo.id !== +id);
+    });
+  }
 }
