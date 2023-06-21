@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { TodoService } from './services/todo.service';
 
 @Component({
@@ -8,17 +8,6 @@ import { TodoService } from './services/todo.service';
 })
 export class AppComponent {
   title = signal<string>('todolist');
-  quantity = signal(1);
-
-  qtyAvailable = signal([1, 2, 3, 4, 5, 6]);
-
-  selectedVehicle = signal<Vehicle>({
-    id: 1,
-    name: 'AT-AT',
-    price: 19416.13,
-  });
-
-  vehicles = signal<Vehicle[]>([]);
 
   constructor(private todoService: TodoService) {}
 
