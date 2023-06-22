@@ -1,1 +1,6 @@
-<app-todo-list />
+<!-- <app-todo-list /> -->
+<input type="text" (keyup)="settitle()" [(ngModel)]="input" />
+
+<ul>
+  <li *ngFor="let item of items">{{ title() }}</li>
+</ul>
