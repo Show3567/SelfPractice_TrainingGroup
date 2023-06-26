@@ -1,4 +1,4 @@
-<div class="sum">
+<!-- <div class="sum">
   <div class="x">
     <button (click)="incressx()">+</button>
     {{ x() }}
@@ -13,12 +13,17 @@
     {{ sum() }}
   </div>
 </div>
-<button (click)="getTodos()">GetTodos</button>
+<button (click)="getTodos()">GetTodos</button> -->
 <ul>
-  <li *ngFor="let item of todolist()">
+  <app-todo-item
+    *ngFor="let item of todolist()"
+    [todo]="item"
+    (deleteTodoEmitter)="deleteTodo($event)"
+  />
+  <!-- <li *ngFor="let item of todolist()">
     <span>
       {{ item.title }}
     </span>
     <button (click)="deleteTodo(item.id)">delete</button>
-  </li>
+  </li> -->
 </ul>

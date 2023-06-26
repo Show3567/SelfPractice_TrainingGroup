@@ -3,12 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TodoListComponent } from './componensts/todo-list/todo-list.component';
+import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { TodoItemComponent } from './components/todo-item/todo-item.component';
 
 @NgModule({
-  declarations: [AppComponent, TodoListComponent],
+  declarations: [AppComponent, TodoListComponent, TodoItemComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
