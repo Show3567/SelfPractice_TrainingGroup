@@ -7,12 +7,13 @@ import { TodoService } from './services/todo.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = signal<string>('todolist');
+  // title = signal<string>('todolist');
+  title = 'todolist';
 
-  constructor(private todoService: TodoService) {}
+  // constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
-    this.todoService.getJson().subscribe(console.log);
+    // this.todoService.getJson().subscribe(console.log);
   }
 
   keyupEvent() {

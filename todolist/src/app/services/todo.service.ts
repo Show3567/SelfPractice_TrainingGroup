@@ -58,12 +58,12 @@ export class TodoService {
 
     return this.http
       .delete<null>([this.baseUrl, this.todoPath, id].join('/'))
-      .pipe
-      // mergeMap((_) => {
-      //   return throwError(() => 'err');
-      // }),
-      // retry(4) // if error, retry this obs;
-      ();
+      .pipe(
+        // mergeMap((_) => {
+        //   return throwError(() => 'err');
+        // }),
+        retry(4) // if error, retry this obs;
+      );
   }
 
   addTodo(todo: Todo): Observable<Todo | string> {

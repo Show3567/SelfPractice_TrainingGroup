@@ -9,6 +9,7 @@ import { TodolistComponent } from './components/todo-list/todo-list.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { TodoService } from './services/todo.service';
 
 export const baseUrl = new InjectionToken<string>('');
 
