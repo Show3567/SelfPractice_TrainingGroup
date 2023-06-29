@@ -1,5 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
-import { TodoService } from './services/todo.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +6,7 @@ import { TodoService } from './services/todo.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  // title = signal<string>('todolist');
   title = 'todolist';
-
-  // constructor(private todoService: TodoService) {}
-
-  ngOnInit(): void {
-    // this.todoService.getJson().subscribe(console.log);
-  }
 
   keyupEvent() {
     console.log('keyup');

@@ -7,10 +7,14 @@ import { Component, signal } from '@angular/core';
 })
 export class AppComponent {
   input = '';
+  items = new Array(200).fill(0);
   title = signal<string>('test-signals');
-  items = new Array(20000).fill(0);
 
   settitle() {
     this.title.set(this.input);
+  }
+
+  changetitle() {
+    this.title.set('the change');
   }
 }

@@ -7,7 +7,7 @@ import { tap } from 'rxjs';
   providedIn: 'root',
 })
 export class TodoService {
-  baseUrl = 'https://jsonplaceholder.typicode.com/todos';
+  private readonly baseUrl = 'https://jsonplaceholder.typicode.com/todos';
 
   todos = signal<Todo[]>([]);
 
