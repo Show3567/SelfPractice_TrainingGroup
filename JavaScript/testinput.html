@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<input type="text" id="myInput" value="Hello, World!" />
+		<button onclick="myFunction()">Try it</button>
+
+		<script>
+			function myFunction() {
+				var input = document.getElementById("myInput");
+				var startIndex = input.selectionStart;
+				var endIndex = input.selectionEnd;
+
+				alert("Start: " + startIndex + ", End: " + endIndex);
+			}
+		</script>
+	</body>
+</html>
