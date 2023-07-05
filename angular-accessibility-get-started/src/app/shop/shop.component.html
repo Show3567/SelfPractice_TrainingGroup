@@ -25,6 +25,16 @@ limitations under the License.
       <mat-card-title>Fillings</mat-card-title>
       <mat-card-content>
         <!-- TODO: #7. Create selectable controls with Angular Material -->
+        <mat-selection-list
+          name="vegan"
+          id="vegan"
+          aria-label="Dumpling fillings"
+          [(ngModel)]="fillings.bokchoy"
+          [(ngModel)]="fillings.tofu"
+        >
+          help_outline
+        </mat-selection-list>
+
         <ul>
           <li>
             <input
@@ -34,7 +44,7 @@ limitations under the License.
               [(ngModel)]="fillings.bokchoy"
               [(ngModel)]="fillings.tofu"
             />
-            <label for="tall">Vegan</label>
+            <label for="vegan">Vegan</label>
             <ul>
               <li>
                 <input

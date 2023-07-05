@@ -18,7 +18,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-shop',
   templateUrl: './shop.component.html',
-  styleUrls: ['./shop.component.scss']
+  styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent implements OnInit {
   quantity = 11;
@@ -33,15 +33,15 @@ export class ShopComponent implements OnInit {
   };
 
   // TODO: #11. Announce changes with LiveAnnouncer
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   counter(i: number): Array<number> {
     return new Array(i);
   }
 
-  public changeColor(color: string): void {
+  changeColor(color: string): void {
     this.color = color;
   }
 
@@ -49,10 +49,18 @@ export class ShopComponent implements OnInit {
     let flavor = '';
 
     // TODO: #7. Create selectable controls with Angular Material
-    if (this.fillings.bokchoy) { flavor += 'Bok Choy '; }
-    if (this.fillings.tofu) { flavor += 'Tofu & Mushroom '; }
-    if (this.fillings.chicken) { flavor += 'Chicken & Ginger '; }
-    if (this.fillings.impossible) { flavor += 'Impossible Meat '; }
+    if (this.fillings.bokchoy) {
+      flavor += 'Bok Choy ';
+    }
+    if (this.fillings.tofu) {
+      flavor += 'Tofu & Mushroom ';
+    }
+    if (this.fillings.chicken) {
+      flavor += 'Chicken & Ginger ';
+    }
+    if (this.fillings.impossible) {
+      flavor += 'Impossible Meat ';
+    }
 
     const fakePurchase = `Purchase ${this.quantity} ${flavor}dumplings in the color ${this.color}!`;
     console.log(fakePurchase);
