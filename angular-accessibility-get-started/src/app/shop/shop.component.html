@@ -24,18 +24,13 @@ limitations under the License.
     <mat-card class="fillings selection-card">
       <mat-card-title>Fillings</mat-card-title>
       <mat-card-content>
-        <!-- TODO: #7. Create selectable controls with Angular Material -->
-        <mat-selection-list
-          name="vegan"
-          id="vegan"
-          aria-label="Dumpling fillings"
-          [(ngModel)]="fillings.bokchoy"
-          [(ngModel)]="fillings.tofu"
-        >
-          help_outline
+        <mat-selection-list [(ngModel)]="selectedFillings">
+          <mat-list-option *ngFor="let item of fillings" [value]="item">
+            {{ item }}
+          </mat-list-option>
         </mat-selection-list>
-
-        <ul>
+        <!-- TODO: #7. Create selectable controls with Angular Material -->
+        <!-- <ul>
           <li>
             <input
               type="checkbox"
@@ -96,7 +91,7 @@ limitations under the License.
               </li>
             </ul>
           </li>
-        </ul>
+        </ul> -->
       </mat-card-content>
     </mat-card>
     <mat-card class="quantity selection-card">
