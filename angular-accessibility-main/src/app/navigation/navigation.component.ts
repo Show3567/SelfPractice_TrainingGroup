@@ -19,7 +19,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss']
+  styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
   isDark: boolean | undefined;
@@ -27,7 +27,9 @@ export class NavigationComponent implements OnInit {
   constructor(private overlayContainer: OverlayContainer) {}
 
   ngOnInit(): void {
-    this.isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    this.isDark =
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
     this.setTheme();
   }
 
@@ -38,6 +40,8 @@ export class NavigationComponent implements OnInit {
 
   setTheme(): void {
     document.documentElement.classList.toggle('dark-theme', this.isDark);
-    this.overlayContainer.getContainerElement().classList.toggle('dark-theme', this.isDark);
+    this.overlayContainer
+      .getContainerElement()
+      .classList.toggle('dark-theme', this.isDark);
   }
 }
