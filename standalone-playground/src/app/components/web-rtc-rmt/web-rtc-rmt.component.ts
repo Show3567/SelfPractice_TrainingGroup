@@ -10,5 +10,61 @@ import { SharedModule } from 'src/app/shared/shared.module';
   styleUrls: ['./web-rtc-rmt.component.scss'],
 })
 export class WebRtcRmtComponent {
+  private rpc = new RTCPeerConnection();
+  private rchannel!: RTCDataChannel;
+
   offer = '';
+  answer = '';
+
+  intervalRef: any;
+
+  constructor() {}
+
+  ngOnInit(): void {
+    this.intervalRef = setInterval(
+      () => console.log(this.rpc.iceConnectionState),
+      2000
+    );
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalRef);
+  }
+
+  async createAnswer() {
+    try {
+      this.rpc.onicecandidate = (e) =>
+        console.log(
+          'New Ice Candidate! reprinting SDP remote ',
+          this.rpc.localDescription
+        );
+
+      this.rpc.ondatachannel = (e) => {
+        this.rchannel = e.channel;
+
+        this.rchannel.onmessage = (e) =>
+          console.log('new message from client! ' + e.data);
+        this.rchannel.onopen = (e) => console.log('Connection answer opened!');
+        this.rchannel.onerror = (e) => console.log(e);
+      };
+
+      // this.rpc.oniceconnectionstatechange = (e) =>
+      //   console.log('status: ', this.rpc.iceConnectionState);
+
+      const createdoffer = new RTCSessionDescription(JSON.parse(this.offer));
+
+      await this.rpc.setRemoteDescription(createdoffer);
+      console.log('offer set');
+
+      const createdAnswer = await this.rpc.createAnswer({
+        optional: [{ RtpDataChannels: true }],
+      });
+      await this.rpc.setLocalDescription(createdAnswer);
+
+      this.answer = JSON.stringify(createdAnswer);
+      console.log('answer created');
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
