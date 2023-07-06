@@ -21,10 +21,9 @@ export class WebRtcRmtComponent {
   constructor() {}
 
   ngOnInit(): void {
-    this.intervalRef = setInterval(
-      () => console.log(this.rpc.connectionState),
-      2000
-    );
+    this.rpc.onconnectionstatechange = (e) => {
+      console.log(this.rpc.iceConnectionState);
+    };
   }
 
   ngOnDestroy(): void {

@@ -27,10 +27,9 @@ export class WebRtcComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
-    this.intervalRef = setInterval(
-      () => console.log(this.peerConnection.iceConnectionState),
-      2000
-    );
+    this.peerConnection.onconnectionstatechange = (e) => {
+      console.log(this.peerConnection.iceConnectionState);
+    };
   }
 
   ngOnDestroy(): void {
