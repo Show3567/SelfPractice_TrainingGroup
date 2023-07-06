@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { WebRtcService } from './../../services/web-rtc.service';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,9 +16,19 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./web-rtc.component.scss'],
 })
 export class WebRtcComponent implements OnInit, OnDestroy {
-  localStream: any;
-  remoteStream: any;
+  private localStream!: MediaStream;
+  private remoteStream!: MediaStream;
 
-  ngOnInit(): void {}
+  @ViewChild('user1', { static: true }) user1!: ElementRef;
+  @ViewChild('user2', { static: true }) user2!: ElementRef;
+
+  constructor(private webRtcService: WebRtcService) {}
+
+  ngOnInit(): void {
+    this.webRtcService.setVideo().subscribe((stream) => {
+      this.localStream = stream;
+    });
+  }
+
   ngOnDestroy(): void {}
 }
