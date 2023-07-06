@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core';
+import { from } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WebRtcService {
+  constructor() {}
 
-  constructor() { }
+  setVideo() {
+    return from(
+      navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: false,
+      })
+    );
+  }
 }
