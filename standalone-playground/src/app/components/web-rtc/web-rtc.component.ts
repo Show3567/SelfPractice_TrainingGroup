@@ -6,16 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  Observable,
-  Subject,
-  from,
-  switchMap,
-  take,
-  takeUntil,
-  tap,
-} from 'rxjs';
-import AgoraRTC from 'agora-rtc-sdk-ng';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -26,31 +16,48 @@ import { SharedModule } from 'src/app/shared/shared.module';
   styleUrls: ['./web-rtc.component.scss'],
 })
 export class WebRtcComponent implements OnInit, OnDestroy {
+  // private servers = {
+  //   iceServers: [
+  //     {
+  //       urls: [
+  //         'stun:stun1.l.google.com:19302',
+  //         'stun:stun2.l.google.com:19302',
+  //       ],
+  //     },
+  //   ],
+  // };
   offer = '';
   answer = '';
 
   private peerConnection = new RTCPeerConnection();
-  private channel: RTCDataChannel =
-    this.peerConnection.createDataChannel('1st channel');
+  private channel!: RTCDataChannel;
 
-  private peerConnection_remote = new RTCPeerConnection();
-  private channel_remote!: RTCDataChannel;
+  private rpc = new RTCPeerConnection();
+  private rchannel!: RTCDataChannel;
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.channel.onmessage = (e) => console.log('Just got a message ' + e.data);
-    this.channel.onopen = (e) => console.log('Connection opened!');
+  ngOnInit(): void {}
 
-    this.peerConnection.onicecandidate = (e) =>
-      console.log(
-        'New Ice Candidate! reprinting SDP' +
-          JSON.stringify(this.peerConnection.localDescription)
-      );
-  }
   ngOnDestroy(): void {}
 
   async createOffer() {
+    this.channel = this.peerConnection.createDataChannel('channel');
+
+    this.channel.onopen = (e) => {
+      console.log('Connection offer opened!');
+    };
+    this.channel.onmessage = (e) => console.log('Just got a message ' + e.data);
+
+    this.peerConnection.onicecandidate = (e) =>
+      console.log(
+        'New Ice Candidate! reprinting SDP ',
+        this.peerConnection.localDescription
+      );
+
+    this.peerConnection.oniceconnectionstatechange = (e) =>
+      console.log('status: ', this.peerConnection.iceConnectionState);
+
     const createdoffer = await this.peerConnection.createOffer();
     this.peerConnection.setLocalDescription(createdoffer);
 
@@ -59,25 +66,32 @@ export class WebRtcComponent implements OnInit, OnDestroy {
   }
 
   async createAnswer() {
-    const createdoffer = JSON.parse(this.offer);
-
-    this.peerConnection_remote.onicecandidate = (e) =>
+    this.rpc.onicecandidate = (e) =>
       console.log(
-        'New Ice Candidate! reprinting SDP' +
-          JSON.stringify(this.peerConnection_remote.localDescription)
+        'New Ice Candidate! reprinting SDP remote ',
+        this.rpc.localDescription
       );
-    this.peerConnection_remote.ondatachannel = (e) => {
-      this.channel_remote = e.channel;
-      this.channel_remote.onmessage = (e) =>
+
+    this.rpc.ondatachannel = (e) => {
+      this.rchannel = e.channel;
+
+      this.rchannel.onmessage = (e) =>
         console.log('new message from client! ' + e.data);
-      this.channel_remote.onopen = (e) => console.log('Connection opened!');
+      this.rchannel.onopen = (e) => console.log('Connection answer opened!');
     };
 
-    await this.peerConnection_remote.setRemoteDescription(createdoffer);
+    this.rpc.oniceconnectionstatechange = (e) =>
+      console.log('status: ', this.rpc.iceConnectionState);
+
+    const createdoffer = new RTCSessionDescription(JSON.parse(this.offer));
+
+    await this.rpc.setRemoteDescription(createdoffer);
     console.log('offer set');
 
-    const createdAnswer = await this.peerConnection_remote.createAnswer();
-    this.peerConnection_remote.setLocalDescription(createdAnswer);
+    const createdAnswer = await this.rpc.createAnswer({
+      optional: [{ RtpDataChannels: true }],
+    });
+    this.rpc.setLocalDescription(createdAnswer);
 
     this.answer = JSON.stringify(createdAnswer);
     console.log('answer created');
@@ -85,9 +99,7 @@ export class WebRtcComponent implements OnInit, OnDestroy {
 
   async createConnection() {
     console.log('createing...');
-    const createdAnswer = JSON.parse(this.answer);
-    console.log(createdAnswer);
-
+    const createdAnswer = new RTCSessionDescription(JSON.parse(this.answer));
     await this.peerConnection.setRemoteDescription(createdAnswer);
     console.log('done');
   }

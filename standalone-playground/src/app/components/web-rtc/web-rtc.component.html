@@ -20,18 +20,24 @@
 <section class="offer">
   <div>
     <label for="offer">Offer: </label>
-    <input type="text" id="offer" [(ngModel)]="offer" />
-    <button (click)="createOffer()">Create Offer</button>
+    <textarea type="text" id="offer" [(ngModel)]="offer"></textarea>
+    <div>
+      <button (click)="createOffer()">Create Offer</button>
+    </div>
   </div>
 </section>
 
 <section class="answer">
   <div>
     <label for="answer">Answer: </label>
-    <input type="text" id="answer" [(ngModel)]="answer" />
-    <button (click)="createAnswer()">Create Answer</button>
+    <textarea type="text" id="answer" [(ngModel)]="answer"></textarea>
+    <div>
+      <button (click)="createAnswer()">Create Answer</button>
+    </div>
   </div>
 </section>
 
-<button (click)="createConnection()">Create Connection</button>
-<button (click)="sendMessage()">Send Message</button>
+<div>
+  <button (click)="createConnection()">Create Connection</button>
+  <button (click)="sendMessage()">Send Message</button>
+</div>
