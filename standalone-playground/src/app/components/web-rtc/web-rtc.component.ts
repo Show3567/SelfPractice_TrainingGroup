@@ -41,17 +41,13 @@ export class WebRtcComponent implements OnInit, OnDestroy {
     try {
       this.createChannel();
 
-      this.peerConnection.onicecandidate = (e) =>
-        console.log(
-          'new ice Candidate! host! ',
-          this.peerConnection.localDescription
-        );
+      this.peerConnection.onicecandidate = (e) => {
+        this.offer = JSON.stringify(this.peerConnection.localDescription);
+        console.log('new ice Candidate! host! ', this.offer);
+      };
 
       const createdoffer = await this.peerConnection.createOffer();
       this.peerConnection.setLocalDescription(createdoffer);
-
-      this.offer = JSON.stringify(createdoffer);
-      console.log('set Successfully!', this.peerConnection.iceConnectionState);
     } catch (error) {
       console.log(error);
     }

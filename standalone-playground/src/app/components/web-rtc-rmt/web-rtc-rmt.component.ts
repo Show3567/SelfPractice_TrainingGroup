@@ -22,7 +22,7 @@ export class WebRtcRmtComponent {
 
   ngOnInit(): void {
     this.intervalRef = setInterval(
-      () => console.log(this.rpc.iceConnectionState),
+      () => console.log(this.rpc.connectionState),
       2000
     );
   }
@@ -33,11 +33,10 @@ export class WebRtcRmtComponent {
 
   async createAnswer() {
     try {
-      this.rpc.onicecandidate = (e) =>
-        console.log(
-          'New Ice Candidate! reprinting SDP remote ',
-          this.rpc.localDescription
-        );
+      this.rpc.onicecandidate = (e) => {
+        this.answer = JSON.stringify(this.rpc.localDescription);
+        console.log('New Ice Candidate! reprinting SDP remote ', this.answer);
+      };
 
       this.rpc.ondatachannel = (e) => {
         this.rchannel = e.channel;
@@ -48,17 +47,12 @@ export class WebRtcRmtComponent {
         this.rchannel.onerror = (e) => console.log(e);
       };
 
-      // this.rpc.oniceconnectionstatechange = (e) =>
-      //   console.log('status: ', this.rpc.iceConnectionState);
-
       const createdoffer = new RTCSessionDescription(JSON.parse(this.offer));
 
       await this.rpc.setRemoteDescription(createdoffer);
       console.log('offer set');
 
-      const createdAnswer = await this.rpc.createAnswer({
-        optional: [{ RtpDataChannels: true }],
-      });
+      const createdAnswer = await this.rpc.createAnswer();
       await this.rpc.setLocalDescription(createdAnswer);
 
       this.answer = JSON.stringify(createdAnswer);
