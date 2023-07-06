@@ -32,33 +32,29 @@ export class WebRtcRmtComponent {
   }
 
   async createAnswer() {
-    try {
-      this.rpc.onicecandidate = (e) => {
-        this.answer = JSON.stringify(this.rpc.localDescription);
-        console.log('New Ice Candidate! reprinting SDP remote ', this.answer);
-      };
+    this.rpc.onicecandidate = (e) => {
+      this.answer = JSON.stringify(this.rpc.localDescription);
+      console.log('New Ice Candidate! reprinting SDP remote ', this.answer);
+    };
 
-      this.rpc.ondatachannel = (e) => {
-        this.rchannel = e.channel;
+    this.rpc.ondatachannel = (e) => {
+      this.rchannel = e.channel;
 
-        this.rchannel.onmessage = (e) =>
-          console.log('new message from client! ' + e.data);
-        this.rchannel.onopen = (e) => console.log('Connection answer opened!');
-        this.rchannel.onerror = (e) => console.log(e);
-      };
+      this.rchannel.onmessage = (e) =>
+        console.log('new message from client! ' + e.data);
+      this.rchannel.onopen = (e) => console.log('Connection answer opened!');
+      this.rchannel.onerror = (e) => console.log(e);
+    };
 
-      const createdoffer = new RTCSessionDescription(JSON.parse(this.offer));
+    const createdoffer = new RTCSessionDescription(JSON.parse(this.offer));
 
-      await this.rpc.setRemoteDescription(createdoffer);
-      console.log('offer set');
+    await this.rpc.setRemoteDescription(createdoffer);
+    console.log('offer set');
 
-      const createdAnswer = await this.rpc.createAnswer();
-      await this.rpc.setLocalDescription(createdAnswer);
+    const createdAnswer = await this.rpc.createAnswer();
+    await this.rpc.setLocalDescription(createdAnswer);
 
-      this.answer = JSON.stringify(createdAnswer);
-      console.log('answer created');
-    } catch (error) {
-      console.log(error);
-    }
+    this.answer = JSON.stringify(createdAnswer);
+    console.log('answer created');
   }
 }
