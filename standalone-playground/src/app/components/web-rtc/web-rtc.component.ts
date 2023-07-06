@@ -15,8 +15,7 @@ import {
   takeUntil,
   tap,
 } from 'rxjs';
-
-declare var iceServerSDK: any;
+import AgoraRTC from 'agora-rtc-sdk-ng';
 
 @Component({
   selector: 'app-web-rtc',
@@ -26,96 +25,31 @@ declare var iceServerSDK: any;
   styleUrls: ['./web-rtc.component.scss'],
 })
 export class WebRtcComponent implements OnInit, OnDestroy {
-  private APP_ID = 'ed052388dbef42459b02132bfb910eea';
-  private token = null;
-  private uid = Math.floor(Math.random() * 1000_000) + '';
-  private client: any;
-  private channel: any;
-
-  private localStream!: MediaStream;
-  private remoteStream: MediaStream = new MediaStream();
-
-  private servers = {
-    iceServers: [
-      {
-        urls: [
-          'stun:stun1.l.google.com:19302',
-          'stun:stun2.l.google.com:19302',
-        ],
-      },
-    ],
-  };
-  private peerConnection = new RTCPeerConnection(this.servers);
-
-  private notifier = new Subject();
-
-  @ViewChild('user1', { static: true }) user1!: ElementRef;
-  @ViewChild('user2', { static: true }) user2!: ElementRef;
+  private peerConnection = new RTCPeerConnection();
+  private channel: RTCDataChannel =
+    this.peerConnection.createDataChannel('1st channel');
 
   constructor() {}
 
   ngOnInit(): void {
-    this.user2.nativeElement.srcObject = this.remoteStream;
+    this.channel.onmessage = (e) => console.log('Just got a message ' + e.data);
+    this.channel.onopen = (e) => console.log('Connection opened!');
+
+    this.peerConnection.onicecandidate = (e) =>
+      console.log(
+        'New Ice Candidate! reprinting SDP' +
+          JSON.stringify(this.peerConnection.localDescription)
+      );
+
+    this.createOffer();
   }
+  ngOnDestroy(): void {}
 
-  ngOnDestroy(): void {
-    this.stopObs();
+  private async crteateWebRtc() {}
+
+  private async createOffer() {
+    const offer = await this.peerConnection.createOffer();
+    this.peerConnection.setLocalDescription(offer);
+    console.log('set Successfully!');
   }
-
-  private createVideoForUser() {
-    from(
-      navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: false,
-      })
-    )
-      .pipe(
-        takeUntil(this.notifier),
-        tap((stream) => {
-          this.localStream = stream;
-          this.user1.nativeElement.srcObject = this.localStream;
-        }),
-        switchMap((_) => {
-          this.localStream.getTracks().forEach((track) => {
-            this.peerConnection.addTrack(track, this.localStream);
-          });
-
-          this.peerConnection.ontrack = (event) => {
-            event.streams[0].getTracks().forEach((track) => {
-              this.remoteStream.addTrack(track);
-            });
-          };
-
-          this.peerConnection.onicecandidate = (event) => {
-            if (event.candidate) {
-            }
-          };
-
-          return from(this.peerConnection.createOffer());
-        }),
-        switchMap((offer) => {
-          return from(this.peerConnection.setLocalDescription(offer));
-        })
-      )
-      .subscribe();
-  }
-
-  private stopObs() {
-    this.notifier.next(null);
-    this.notifier.complete();
-  }
-
-  /* from service */
-  // setVideo(): Observable<MediaStream> {
-  //   return from(
-  //     navigator.mediaDevices.getUserMedia({
-  //       video: true,
-  //       audio: false,
-  //     })
-  //   );
-  // }
-
-  // createOffer() {
-  //   return from(this.peerConnection.createOffer());
-  // }
 }
