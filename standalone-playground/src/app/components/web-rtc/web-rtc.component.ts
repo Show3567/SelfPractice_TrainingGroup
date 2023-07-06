@@ -16,18 +16,26 @@ import {
   tap,
 } from 'rxjs';
 import AgoraRTC from 'agora-rtc-sdk-ng';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-web-rtc',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SharedModule],
   templateUrl: './web-rtc.component.html',
   styleUrls: ['./web-rtc.component.scss'],
 })
 export class WebRtcComponent implements OnInit, OnDestroy {
+  offer = '';
+  answer = '';
+
   private peerConnection = new RTCPeerConnection();
   private channel: RTCDataChannel =
     this.peerConnection.createDataChannel('1st channel');
+
+  private peerConnection_remote = new RTCPeerConnection();
+  private channel_remote: RTCDataChannel =
+    this.peerConnection_remote.createDataChannel('1st channel');
 
   constructor() {}
 
@@ -40,16 +48,38 @@ export class WebRtcComponent implements OnInit, OnDestroy {
         'New Ice Candidate! reprinting SDP' +
           JSON.stringify(this.peerConnection.localDescription)
       );
-
-    this.createOffer();
   }
   ngOnDestroy(): void {}
 
-  private async crteateWebRtc() {}
+  async createOffer() {
+    const createdoffer = await this.peerConnection.createOffer();
+    this.peerConnection.setLocalDescription(createdoffer);
 
-  private async createOffer() {
-    const offer = await this.peerConnection.createOffer();
-    this.peerConnection.setLocalDescription(offer);
+    this.offer = JSON.stringify(createdoffer);
     console.log('set Successfully!');
+  }
+
+  async createAnswer() {
+    const createdoffer = JSON.parse(this.offer);
+
+    this.peerConnection_remote.onicecandidate = (e) =>
+      console.log(
+        'New Ice Candidate! reprinting SDP' +
+          JSON.stringify(this.peerConnection_remote.localDescription)
+      );
+    this.peerConnection_remote.ondatachannel = (e) => {
+      const dc = e.channel;
+      dc.onmessage = (e) => console.log('new message from client! ' + e.data);
+      dc.onopen = (e) => console.log('Connection opened!');
+    };
+
+    await this.peerConnection_remote.setRemoteDescription(createdoffer);
+    console.log('offer set');
+
+    const createdAnswer = await this.peerConnection_remote.createAnswer();
+    this.peerConnection_remote.setLocalDescription(createdAnswer);
+
+    this.answer = JSON.stringify(createdAnswer);
+    console.log('answer created');
   }
 }

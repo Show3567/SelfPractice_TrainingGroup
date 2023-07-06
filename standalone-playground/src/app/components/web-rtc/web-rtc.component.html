@@ -1,4 +1,4 @@
-<div id="videos">
+<!-- <div id="videos">
   <video
     src=""
     class="video-player"
@@ -15,4 +15,20 @@
     [playsInline]="true"
     #user2
   ></video>
-</div>
+</div> -->
+
+<section class="offer">
+  <div>
+    <label for="offer">Offer: </label>
+    <input type="text" id="offer" [(ngModel)]="offer" />
+    <button (click)="createOffer()">Create Offer</button>
+  </div>
+</section>
+
+<section class="answer">
+  <div>
+    <label for="answer">Answer: </label>
+    <input type="text" id="answer" [(ngModel)]="answer" />
+    <button (click)="createAnswer()">Create Answer</button>
+  </div>
+</section>
