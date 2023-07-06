@@ -34,8 +34,7 @@ export class WebRtcComponent implements OnInit, OnDestroy {
     this.peerConnection.createDataChannel('1st channel');
 
   private peerConnection_remote = new RTCPeerConnection();
-  private channel_remote: RTCDataChannel =
-    this.peerConnection_remote.createDataChannel('1st channel');
+  private channel_remote!: RTCDataChannel;
 
   constructor() {}
 
@@ -68,9 +67,10 @@ export class WebRtcComponent implements OnInit, OnDestroy {
           JSON.stringify(this.peerConnection_remote.localDescription)
       );
     this.peerConnection_remote.ondatachannel = (e) => {
-      const dc = e.channel;
-      dc.onmessage = (e) => console.log('new message from client! ' + e.data);
-      dc.onopen = (e) => console.log('Connection opened!');
+      this.channel_remote = e.channel;
+      this.channel_remote.onmessage = (e) =>
+        console.log('new message from client! ' + e.data);
+      this.channel_remote.onopen = (e) => console.log('Connection opened!');
     };
 
     await this.peerConnection_remote.setRemoteDescription(createdoffer);
@@ -81,5 +81,18 @@ export class WebRtcComponent implements OnInit, OnDestroy {
 
     this.answer = JSON.stringify(createdAnswer);
     console.log('answer created');
+  }
+
+  async createConnection() {
+    console.log('createing...');
+    const createdAnswer = JSON.parse(this.answer);
+    console.log(createdAnswer);
+
+    await this.peerConnection.setRemoteDescription(createdAnswer);
+    console.log('done');
+  }
+
+  sendMessage() {
+    this.channel.send('hello world');
   }
 }
