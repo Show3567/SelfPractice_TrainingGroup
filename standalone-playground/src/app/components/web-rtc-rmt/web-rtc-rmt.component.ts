@@ -57,4 +57,8 @@ export class WebRtcRmtComponent {
     this.answer = JSON.stringify(createdAnswer);
     console.log('answer created');
   }
+
+  sendMessage() {
+    this.rchannel.send('hihihi');
+  }
 }

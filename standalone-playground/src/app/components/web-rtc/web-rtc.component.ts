@@ -60,7 +60,8 @@ export class WebRtcComponent implements OnInit, OnDestroy {
     this.channel.onopen = (e) => {
       console.log('Connection offer opened!');
     };
-    this.channel.onmessage = (e) => console.log('Just got a message ' + e.data);
+    this.channel.onmessage = (e) =>
+      console.log('Just got a message from remote' + e.data);
     this.channel.onerror = (e) => console.log(e);
   }
 
