@@ -1,5 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  useAnimation,
+} from '@angular/animations';
+import { fadeIn, fadeOut } from 'src/app/animation/carousel.animation';
 
 @Component({
   selector: 'carousel',
@@ -8,10 +15,19 @@ import { trigger, transition, style, animate } from '@angular/animations';
   animations: [
     trigger('carouselAnimation', [
       transition('void => *', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 })),
+        useAnimation(fadeIn, {
+          params: {
+            timer: '300ms',
+          },
+        }),
       ]),
-      transition('* => void', [animate('300ms', style({ opacity: 0 }))]),
+      transition('* => void', [
+        useAnimation(fadeOut, {
+          params: {
+            timer: '300ms',
+          },
+        }),
+      ]),
     ]),
   ],
 })
