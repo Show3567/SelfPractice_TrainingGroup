@@ -1,9 +1,19 @@
 import { Component, Input } from '@angular/core';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
+  animations: [
+    trigger('carouselAnimation', [
+      transition('void => *', [
+        style({ opacity: 0 }),
+        animate('300ms', style({ opacity: 1 })),
+      ]),
+      transition('* => void', [animate('300ms', style({ opacity: 0 }))]),
+    ]),
+  ],
 })
 export class CarouselComponent {
   @Input() slides!: { src: string }[];
