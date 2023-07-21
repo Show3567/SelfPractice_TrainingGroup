@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { TestcarouselComponent } from './components/testcarousel/testcarousel.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
     TodoListComponent,
     TodoItemComponent,
     CarouselComponent,
+    TestcarouselComponent,
   ],
   imports: [
     BrowserModule,
