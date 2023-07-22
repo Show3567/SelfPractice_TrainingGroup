@@ -1,1 +1,19 @@
-<p>testcarousel works!</p>
+<div class="container">
+  <button (click)="toLeft()"><<<<<<<<<</button>
+  <div class="carousel">
+    <div
+      class="list"
+      [ngStyle]="{
+        transition: useAnimation ? '1s' : 'none',
+        transform: 'translateX(' + position + 'px)',
+      }"
+      (transitionend)="transitionend(listbox)"
+      #listbox
+    >
+      <div class="box" *ngFor="let item of list">
+        {{ item.id }}
+      </div>
+    </div>
+  </div>
+  <button (click)="toRight()">>>>>>>>>></button>
+</div>
