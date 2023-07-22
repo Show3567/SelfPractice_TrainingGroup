@@ -4,10 +4,9 @@
     <div
       class="list"
       [ngStyle]="{
-        transition: useAnimation ? '1s' : 'none',
+        left: left + 'px',
         transform: 'translateX(' + position + 'px)',
       }"
-      (transitionend)="transitionend(listbox)"
       #listbox
     >
       <div class="box" *ngFor="let item of list">
