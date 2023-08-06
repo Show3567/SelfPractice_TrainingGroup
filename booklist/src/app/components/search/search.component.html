@@ -1,6 +1,14 @@
 <main>
-  <input type="text" [formControl]="searchBook" list="recommend" />
-  <button (click)="emptyInput()">Empty</button>
+  <mat-form-field class="example-full-width">
+    <mat-label>Search Book</mat-label>
+    <input
+      matInput
+      placeholder="Ex. Javascript"
+      [formControl]="searchBook"
+      list="recommend"
+    />
+  </mat-form-field>
+  <button mat-raised-button (click)="emptyInput()">Empty</button>
   <hr />
   <section>
     <div

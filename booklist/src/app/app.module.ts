@@ -7,6 +7,7 @@ import { SearchComponent } from './components/search/search.component';
 import { BooklistComponent } from './components/booklist/booklist.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent, SearchComponent, BooklistComponent],
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
